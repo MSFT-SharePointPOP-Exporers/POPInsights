@@ -229,19 +229,45 @@ namespace MvcApplication1.Models
 		/// Calculates the percentage shown on the world map circles
 		/// </summary>
 		/// <returns>A single percentage for a pipeline</returns>
-		public decimal CalculateWorldMapCircle()
+		public DataTable CalculateWorldMapCircle()
 		{
-			DataTable pipePercentTable = CalculateOverviewBar(pipeline);
-			decimal total = 0;
+			dbConnect.Open();
 
-			for (int i = 0; i < pipePercentTable.Rows.Count; i++)
+			DataTable retTable = new DataTable();
+			retTable.Columns.Add("DataCenter", typeof(string));
+			retTable.Columns.Add("Percent", typeof(decimal));
+
+			DataRow toAdd = retTable.NewRow();
+			
+			String[] tags;
+
+			if (pipeline != "Overview")
 			{
-				total = total + (decimal)pipePercentTable.Rows[i]["Percent"];
+				tags = Tags(pipeline);
+			}
+			else
+			{
+				ChangePipeline("UserLogin");
+				tags = Tags(pipeline);
+				ChangePipeline("Overview");
+			}
+			String successTag = tags[0];
+			String failureTag = tags[1];
+			String[] allDCs = GetAllDataCentersArray();
+
+			for (int i = 0; i < allDCs.Length; i++)
+			{
+				ChangeDataCenter(allDCs[i]);
+				toAdd["DataCenter"] = networkID;
+				toAdd["Percent"] = DataCenterOnePercent(successTag, failureTag);
+
+				retTable.Rows.Add(toAdd);
+				toAdd = retTable.NewRow();
 			}
 
-			if (pipePercentTable.Rows.Count == 0) return 0;
-
-			return Math.Round(total / pipePercentTable.Rows.Count, 4);
+			ChangeDataCenter("All");
+			dbConnect.Close();
+			return retTable;
 		}
 
 		/// <summary>
@@ -360,6 +386,24 @@ namespace MvcApplication1.Models
 			return (decimal)onePer.Rows[0][0];
 		}
 
+		private decimal DataCenterOnePercent(String successTag, String failureTag)
+		{
+			String query = "SELECT CAST(SUM(CASE when Tag = '" + successTag + "' then Hits else 0 END) AS DECIMAL)" +
+				"/(SUM(CASE when Tag = '" + successTag + "' then Hits else 0 END)+SUM(CASE when Tag = '" + failureTag + "' then Hits else 0 END ) + .000000001) * 100" +
+				" AS Percentage FROM Prod_Reliability";
+			String where = " WHERE Date >= '" + start.ToString() + "' AND Date < '" + end.ToString() + "' AND DataCenter = '" + dataCenter + "'";
+			String groupBy = " GROUP BY DataCenter";
+
+			query = query + where + groupBy;
+
+			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
+			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
+			DataTable onePer = new DataTable();
+			onePer.Load(queryCommandReader);
+
+			if (onePer.Rows.Count == 0) return 0;
+			return (decimal)onePer.Rows[0][0];
+		}
 
 		/*Everything after this is private methods or helper methods*/
 
@@ -419,8 +463,8 @@ namespace MvcApplication1.Models
 		private DataTable ComponentRawHitsDataTable(String sTag, String fTag)
 		{
 			//Strings that create the query
-			String query = "SELECT DATEADD(HOUR, Hour, Date) AS Date, SUM(CASE when Tag = '" + sTag + "' then Hits else 0 END) AS " + sTag +
-				", SUM(CASE when Tag = '" + fTag + "' then Hits else 0 END ) AS " + fTag + " FROM Prod_Reliability";
+			String query = "SELECT DATEADD(HOUR, Hour, Date) AS Date, SUM(CASE when Tag = '" + sTag + "' then Hits else 0 END) AS '" + sTag +
+				"', SUM(CASE when Tag = '" + fTag + "' then Hits else 0 END ) AS '" + fTag + "' FROM Prod_Reliability";
 			String where = " WHERE Date >= '" + start.ToString() + "' AND Date < '" + end.ToString() + "'";
 			String groupBy = " GROUP BY Date, Hour ORDER BY Date";
 
@@ -495,9 +539,9 @@ namespace MvcApplication1.Models
 		 * 
 		 * 
 		 */
-		public String[] GetAllDataCentersArray()
+		private String[] GetAllDataCentersArray()
 		{
-			dbConnect.Open();
+			
 			String query = "SELECT DataCenter FROM DataCenter";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
@@ -511,8 +555,6 @@ namespace MvcApplication1.Models
 			{
 				dcArray[i] = (String)dataCenters.Rows[i]["DataCenter"];
 			}
-
-			dbConnect.Close();
 			return dcArray;
 		}
 

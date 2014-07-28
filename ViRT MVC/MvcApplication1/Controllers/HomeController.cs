@@ -21,25 +21,15 @@ namespace MvcApplication1.Controllers
 			Reliability world = new Reliability();
 
 			DataTable worldLocs = world.GetDataCenterLatLong();
-			world.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
-			world.ChangePipeline(Request.QueryString["pipeline"]);
-			var json = JsonConvert.SerializeObject(worldLocs);
-			String[] dcs = world.GetAllDataCentersArray();
-
-			DataTable dcPipeAverage = new DataTable();
-			dcPipeAverage.Columns.Add("DataCenter", typeof(string));
-			dcPipeAverage.Columns.Add("Percent", typeof(decimal));
-
-			DataRow temp = dcPipeAverage.NewRow();
-
-			for (int i = 0; i < dcs.Length; i++)
+			if (Request.QueryString["pipeline"] != null)
 			{
-				world.ChangeDataCenter(dcs[i]);
-				temp["DataCenter"] = dcs[i];
-				temp["Percent"] = world.CalculateWorldMapCircle();
-				dcPipeAverage.Rows.Add(temp);
-				temp = dcPipeAverage.NewRow();
+				world.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
+				world.ChangeDataCenter(Request.QueryString["pipeline"]);
 			}
+
+			var json = JsonConvert.SerializeObject(worldLocs);
+
+			DataTable dcPipeAverage = world.CalculateWorldMapCircle();
 
 			var percentages = JsonConvert.SerializeObject(dcPipeAverage);
 
