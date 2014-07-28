@@ -1,0 +1,100 @@
+﻿h1 {
+    font-size:5em;
+            font-family:"Segoe WP SemiLight",Verdana,Helvetica,sans-serif;
+
+}
+
+h2 {
+    font-size: 1.5em;
+    text-align: center;
+            font-family:"Segoe WP SemiLight",Verdana,Helvetica,sans-serif;
+            margin-bottom:2%;
+
+}
+
+p {
+    font-size:14px;
+    font-family:"Segoe UI",Verdana,Helvetica,sans-serif;
+}
+
+
+.dchm {
+height: 65%;
+overflow-y: scroll;
+text-align: center;
+}
+
+.dchm ul {
+    height:100%;
+    list-style-type:none;
+}
+
+#rendering {
+padding-left: 0;
+padding-right: 0;
+height: 96%;
+overflow: hidden;
+}
+
+#jumptonetwork {
+    text-align:center;
+}
+
+#legendBar {
+    position: absolute;
+}
+
+[class*="block-grid-"] {
+    margin:0;
+}
+
+
+.network-box {
+margin: 13px;
+float: none;
+list-style-type: none;
+}
+
+    .farm-box {
+height: 90px;
+width:90px;
+margin: 0.5%;
+display: inline-block;
+padding: 6% 1%;
+        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+
+list-style-type: none;
+    }
+
+    label {
+        margin-bottom: 7px;
+                font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+
+    }
+
+.farm-box:hover {
+        background-color:#008cba;
+        color:black;
+    }
+
+@media only screen and (max-width: 40em) {
+    .dchm {
+        overflow:visible;
+    }
+
+        li.farm_box {
+padding:2%;
+    }
+
+    #rendering {
+        height:initial;
+        overflow:visible;
+        -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+     box-shadow: none;
+    }
+
+    #legendBar {
+        position:fixed;
+    }
+}

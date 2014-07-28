@@ -1,0 +1,8 @@
+﻿#chartdiv {
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+#rendering {
+    overflow:hidden;                  
+}

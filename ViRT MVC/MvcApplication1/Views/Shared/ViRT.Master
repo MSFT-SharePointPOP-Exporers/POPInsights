@@ -1,0 +1,166 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<!DOCTYPE html>
+<html lang="en">
+  <head runat="server">
+    <meta charset="utf-8" />
+    <title>
+      <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <%: Styles.Render("~/Content/css") %>
+    <%: Styles.Render("~/Content/themes/base/css") %>
+    <%: Scripts.Render("~/bundles/jquery") %>
+    <%: Scripts.Render("~/bundles/ViRT_jqueryui") %>
+    <%: Scripts.Render("~/bundles/modernizr") %>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              var arr = [];
+
+              $(document).ajaxSend(function () {
+                  $("#loading").fadeIn();                                     
+              });
+
+              $(document).ajaxComplete(function () {
+                  $("#loading").fadeOut();
+              });
+
+              $.ajax({
+                  contentType: "application/json",
+                  data: "",
+                  url: '<%= Url.Action("getPipelines", "ViRT_Query") %>',
+                  dataType: "json",
+                  success: function (data) {
+                      for (var x = data.length - 1; x >= 0; x--) {
+                          $(".pipelines").append("<li class='pipe' id='" + data[x].Pipeline + "' onclick='setPipeline(this.id)'><a href='#'>" + data[x].Pipeline + "</a></li>");
+                      }
+                      setSelectedPipeline();
+                  }
+              });
+
+              $.ajax({
+                  data: "pipeline=Overview&start=" + sessionStorage["start"] + "&end=" + sessionStorage["end"],
+                  url: '<%= Url.Action("getOverview", "ViRT_Query") %>',
+                  dataType: "json",
+                  success: function (data) {
+                      arr = [];
+                      for (var x = 0; x < data.length; x++) {
+                          if (data[x].Component.indexOf(sessionStorage["pipeline"]) > -1 && sessionStorage["pipeline"] != "Overview") {
+                              arr.push(data[x].Component + "<br><a href='../Home/PercentData'>" + data[x].Percent + "%</a>");
+                          }
+                      }
+                      if (sessionStorage["pipeline"] == "Overview") {
+                          $("#overviewbar h1").html("Overview");
+                      } else {
+                          $("#overviewbar h1").html(arr.join(''));
+                      }
+                   }
+              });
+
+              $.ajax({
+                  data: sessionStorage["query"],
+                  url: '<%= Url.Action("getOverview", "ViRT_Query") %>',
+                  dataType: "json",
+                  success: function (data) {
+                      arr = [];
+                      for (var x = 0; x < data.length; x++) {
+                          arr.push("<tr>");
+                          arr.push("<td class='overview_component'>" + data[x].Component + "</td>");
+                          arr.push("<td class='overview_percent'>" + data[x].Percent + "%</td>");
+                          arr.push("</tr>");
+                      }
+                      $("tbody").html(arr.join(''));
+                  }
+              });
+
+
+              $(".button").click(function () {
+                  if (Date.parse($(".from").val()) != null && Date.parse($(".to").val()) != null) {
+                      if ($(".from").val() != sessionStorage["start"] || $(".to").val() != sessionStorage["end"]) {
+                          $("#loading").fadeIn();
+                          sessionStorage["start"] = $(".from").val();
+                          sessionStorage["end"] = $(".to").val();
+                          updateQueryString();
+                      }
+                  } else {
+                      alert("The format of the dates in the date filters is not correct. (Format: YYYY-MM-DD)");
+
+                  }
+              });
+
+              $("#FeaturedContent_Datacenter").change(function () {
+                  sessionStorage["datacen"] = $("#FeaturedContent_Datacenter").val().toString();
+                  updateQueryString();
+              });
+              $("#FeaturedContent_Network").change(function () {
+                  sessionStorage["network"] = $("#FeaturedContent_Network").val();
+                  updateQueryString();
+              });
+              $("#FeaturedContent_Farm").change(function () {
+                  sessionStorage["farm"] = $("#FeaturedContent_Farm").val();
+                  updateQueryString();
+              });
+          });
+      </script>
+    <asp:ContentPlaceHolder ID="Head" runat="server" />
+  </head>
+  <body>
+    <nav class="top-bar" data-topbar>
+      <!-- Left Nav Section -->
+      <ul class="breadcrumbs show-for-large-up">
+      </ul>
+      <ul class="title-area">
+        <li class="name">
+        </li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="has-dropdown show-for-medium-down">
+            <a href="#">Change Pipeline</a>
+            <ul class="dropdown pipelines">
+            </ul>
+          </li>
+          <li class="has-form  show-for-small-only">
+            <div id="small_dates" class="dates show-for-medium-down medium-12 small-12">
+                <label for="from">Start Date:</label>
+                <input type="text" class="from" name="from">
+                <label for="to">Start Date:</label>
+                <input type="text" class="to" name="to">
+              <a href="#" class="button success [small large] expand">Apply Date Filters</a>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <div id="pipelines" class="show-for-large-up large-1 columns">
+      <ul class="side-nav pipelines">
+      </ul>
+    </div>
+    <div id="overviewbar" class="small-12 medium-3 large-2 columns">
+        <h1></h1>
+	    <table>
+		    <tbody>
+		    </tbody>
+	    </table>
+    </div>
+    <div id="rendering" class="small-12 medium-9 large-9 columns">
+      <div id="dates" class="dates large-2 medium-2 columns show-for-medium-up">
+            <label for="from">Start Date:</label>
+            <input type="text" class="from" name="from">
+            <label for="to">End Date:</label>
+            <input type="text" class="to" name="to">
+        <a href="#" class="button success [tiny small large] expand">Apply Date Filters</a>
+      </div>
+      <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+      <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+      <div id="loading">
+	        <h1>Loading....</h1>
+           <!-- <img src="http://www.newmammal.com/wp-content/uploads/2011/09/Funky-Loading-Gif-P-013.gif" alt="loading"/>-->
+          <img src="../../Images/loadinfo.net.gif" />
+	    </div>
+  </body>
+</html>

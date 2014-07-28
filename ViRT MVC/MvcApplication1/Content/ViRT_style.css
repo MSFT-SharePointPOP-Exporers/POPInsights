@@ -1,0 +1,299 @@
+﻿    /*Default Styles*/
+
+    html {
+        height:100%;
+        margin:0;
+        padding:0;
+        overflow:hidden;
+
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+        background-color: #0F0F0F;
+        overflow:hidden;
+    }
+
+    h1 {
+        text-align:center;
+        margin-bottom:30px;
+        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+    }
+
+    h1, h2 {
+        color:#e4e4e4;
+    }
+
+    p { 
+        color:#e1e1e1;
+    }
+
+    table {
+        width:100%;
+        background:none;
+    }
+
+    td {
+        font-size: 0.95em;
+    }
+
+    td, label {
+        color:#e4e4e4;
+    }
+
+    table,tr,tbody, td {
+        border:none;
+    }
+
+    select {
+        width:inherit;
+    }
+
+    /* Color Scheme for Legend Bar and Data Center Heat Map */
+   
+    .green {
+		background-color: #43ac6a;
+        color: #000000;
+	}
+
+	.yellow {
+		background-color: #ffff51;
+        color: #000000;
+	}
+
+	.red1 {
+		background-color: #c52e2e;
+        color:#ffffff;
+	}
+
+	.red2 {
+		background-color:#4e1010;
+		color:#ffffff;
+	}
+
+	.red3 {
+		background-color: #330000;
+		color:#ffffff;
+	}
+
+    /* Top/Navigation Bar */
+    
+    .top-bar {
+        background-color:#1e1e1e;
+    }
+
+    .top-bar-section .right li .dropdown {
+        z-index:1000;
+    }
+
+    .breadcrumbs {
+        border:none;
+        padding:0.98em 0.875rem 0.5625rem;
+        background:none; 
+    }
+
+    .breadcrumbs > *.current {
+        color: #E1E1E1;
+    }
+    
+    /* Pipeline Bar */                         
+
+    #pipelines {
+        background-color: #0F0F0F;
+        height: 100%;
+        padding: 0;
+        /* padding-top: 60px; */
+        float: left;
+        margin: 0;
+        -moz-box-shadow:    inset 0 0 10px #000000;
+        -webkit-box-shadow: inset 0 0 10px #000000;
+        box-shadow:         inset 0 0 10px #000000;
+    }
+
+    #pipelines ul {
+        padding-top: 60px;
+        padding-bottom:0px;
+        background-color: #0F0F0F;
+    }
+
+    /* Overview Bar */
+
+    #overviewbar {
+        background-color:#1E1E1E;
+        height: 100%;
+        padding: 60px 2% 0px 2%;
+        float: left;
+    }
+
+    #overviewbar h1 {
+        font-size: 25px;
+        margin-bottom: 30%;
+        color:#e4e4e4;
+        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+    }
+
+    .overview_component {
+        float:left;
+        overflow:hidden;
+        color:#e1e1e1;
+        line-height: 2em;
+    }
+
+    .overview_percent {
+        float:right;
+        color:#e1e1e1;
+        line-height: 2em;
+    }
+
+    table tr.even, table tr.alt, table tr:nth-of-type(even) {
+        background:none;
+    }
+
+    /* Rendering: The right side of the dashboard*/
+
+    #rendering {
+        background-color: #0F0F0F;
+        height: 100%;
+        padding-top: 60px;
+        padding-left: 0;
+        padding-right:0;
+        float: left;
+        -moz-box-shadow:    inset 0 0 10px #000000;
+        -webkit-box-shadow: inset 0 0 10px #000000;
+        box-shadow:         inset 0 0 10px #000000;
+                overflow:hidden;
+
+    
+}
+
+    
+    /* Legend Bar */
+
+    #legendBar {
+        background-color: #0F0F0F;
+        bottom: 0;
+        padding: 0 30.5%;
+        position:relative;
+        text-align:center;
+        margin-top: 3%;
+}
+    .legend {
+        font-size:0.73em;
+        height:auto;
+    }
+
+    #legendBar li {
+        padding: 0px;
+        margin: 0px;
+    }
+
+   /* Date Selectors */
+
+    #dates {
+        float: right;
+        top: 0;
+        position: absolute;
+        right: 0;
+        margin-top: 2%;
+        margin-right: 2%;
+        z-index:100;
+    }
+
+     #dates label {
+        color:#e4e4e4;
+    }
+
+    #small_dates label{
+        color:#e4e4e4;
+        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+    }
+
+    .ui-datepicker, .ui-datepicker-title select,.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+        font-size: 0.875rem !important;
+    }
+
+    /* Charts and Graphs */
+
+    #chartdiv {
+        width: 95%;
+        height: 78%;
+        overflow: hidden;
+        margin-top: 1%;
+    }
+
+     .graph_header {
+        text-align:center;
+    }
+
+    /* Dropdowns for Datacenters, Networks, and Farms seen above chart*/
+
+    #selectors {
+        margin-top:5.5%;
+        text-align:center;
+    }
+
+    #SelectDatacenter, #SelectNetwork, #SelectFarm {
+          display:inline-block;
+    }
+
+    #SelectNetwork {
+        margin: 0 4%;
+    }
+
+    /* Loading Screen */
+
+    	#loading {
+		display: none;
+		z-index: 100;
+		width: 100%;
+		text-align: center;
+		position: fixed;
+		height: 100%;
+		top: 0;
+		background-color: rgba(0, 0, 0, 0.93);
+	}
+
+	    #loading h1 {
+		    margin-bottom: 1%;
+            margin-top: 18%;
+            font-family: "Segoe WP",Verdana,Helvetica,sans-serif;
+	    }
+
+	#loading img {
+		width:48px;
+		height:48px;
+		margin:0 auto;
+	}
+
+
+     /* max-width 640px, mobile-only styles*/
+
+    @media only screen and (max-width: 40em) {
+        
+        body {
+            overflow-y:scroll;
+        }
+
+        #legendBar {
+            padding: 0 12.5%;
+        }           
+        
+        /* Overview Bar Mobile View */
+
+        #overviewbar{
+            padding: 12% 12% 0px 12%;
+            height:initial;
+        }
+
+        #overviewbar h1{
+            margin-bottom: 20%;
+
+        }
+        .overview_component,.overview_percent { 
+            font-size:1.1em;
+            margin-bottom: 6%;
+        } 
+    }
+
+

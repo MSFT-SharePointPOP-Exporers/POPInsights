@@ -1,0 +1,86 @@
+﻿
+<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta name="viewport" content="width=device-width" />
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <%: Styles.Render("~/Content/RePD_css") %>
+    <%: Styles.Render("~/Content/themes/base/css") %>
+    <%: Scripts.Render("~/bundles/jquery") %>
+    <%: Scripts.Render("~/bundles/RePD_jqueryui") %>
+    <%: Scripts.Render("~/bundles/modernizr") %>
+    <script>
+        $(document).ready(function () {
+
+            //Updates the range and the legend.
+            $.ajax({
+                url: '<%= Url.Action("getRange", "RePD_Query") %>',
+                success: function (data) {
+                    $("#legend .green").append("[" + upper.toFixed(2) + ", 100]");
+                    $("#legend .yellow").append("[" + lower.toFixed(2) + "," + upper.toFixed(2) + ")");
+                    $("#legend .red").append("[" + 0 + "," + lower.toFixed(2) + ")");
+                }
+            });
+
+            //Will grab team names.
+            $.ajax({
+                url: '<%= Url.Action("getTeams", "ViRT_Query") %>',
+                success: function (data) {
+                    for (var x = data.length - 1; x >= 0; x--) {
+                        $(".teams").append("<li class='team' id='" + data[x].Team + "' onclick='setTeam(this.id)'><a href='#'>" + data[x].Team + "</a></li>");
+                    }
+                    setSelectedTeam();
+                }
+            });
+        });
+    </script>
+    <asp:ContentPlaceHolder ID="Head" runat="server" ></asp:ContentPlaceHolder>
+</head>
+<body>
+    <nav class="top-bar" data-topbar>
+      <!-- Left Nav Section -->
+      <ul class="breadcrumbs show-for-large-up">
+      <li><a href="../Home/Index">Back to ViRT</a></li>
+      </ul>
+      <ul class="title-area">
+        <li class="name">
+        </li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="has-dropdown show-for-medium-down">
+          </li>
+          <li class="has-form  show-for-small-only">
+            <div id="small_dates" class="dates show-for-medium-down medium-12 small-12">
+                <label for="month">Select Month:</label>
+                <input type="text" class="month" name="month" />
+            </div>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    <div id="teams" class="show-for-large-up large-1 columns">
+    <ul class="side-nav teams">
+        <li class="team" id="TenantPlatform" onclick="setTeam(this.id)"><a href="#">Tenant Platform</a></li>
+        <li class="team" id="Authentication" onclick="setTeam(this.id)"><a href="#">Authentication</a></li>
+        <li class="team" id="OneDrive" onclick="setTeam(this.id)"><a href="#">OneDrive</a></li>
+        <li class="team" id="Profile" onclick="setTeam(this.id)"><a href="#">Profile</a></li>
+    </ul>
+    </div>
+    <div id="rendering" class="small-12 medium-11 large-11 columns">
+        <h1></h1>
+      <div id="dates" class="dates large-2 medium-2 columns show-for-medium-up">
+            <label for="month">Select Month:</label>
+            <input type="text" class="month" name="month" />
+      </div>
+      <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+      <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+  </body>
+</html>
