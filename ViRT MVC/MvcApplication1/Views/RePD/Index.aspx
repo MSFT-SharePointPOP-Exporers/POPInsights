@@ -6,77 +6,87 @@
 
 <asp:Content ID="Head" ContentPlaceHolderID="Head" runat="server">
     <style>
+        #Overall {
+            padding-bottom:13%;
+        }
+
     #chartdiv {
             width: 100%;
             height: 700px;
             display:none;
             text-align:center;
-            margin-bottom:15%;
+            margin-bottom:5%;
         }
         #PerformanceDiv {
             width: 100%;
             height: 700px;
             display:none;
             text-align:center;
-            margin-bottom:15%;
+            margin-bottom:5%;
         }
         #PercentileDiv {
             width: 100%;
             display:none;
             text-align:center;
             height: 700px;
-            margin-bottom:15%;
+            margin-bottom:5%;
         }
         </style>
     <script>
         $(document).ready(function () {
-            $("#rendering h1").append($.QueryString("team"));
+            $("#rendering h1").append(sessionStorage["team"]);
 
-                $.ajax({
+                var ajaxreliability = $.ajax({
                     data: "month=" + sessionStorage["month"],
-                    url: '<%= Url.Action("getReliability", "RePD_Query") %>',
-                    success: function (data) {
-                        reliability_val = parseFloat(data);
-                        if (reliability_val != 0) {
-                            $(".reliability").append(reliability_val.toFixed(2) + "%");
-                            if (reliability_val > upper) {
-                                $(".reliability").addClass("green");
-                            } else if (reliability_val > lower && reliability_val < upper) {
-                                $(".reliability").addClass("yellow");
-                            } else if (reliability_val < lower) {
-                                $(".reliability").addClass("red");
-                            }
-                        } else {
-                            $(".reliability").append("N/A");
-                        }
-                    }
+                    url: '<%= Url.Action("getReliability", "RePD_Query") %>'                        
                 });
 
-            $.ajax({
+            var ajaxperformance = $.ajax({
                 data: "month=" + sessionStorage["month"],
-                    url: '<%= Url.Action("getPerformance", "RePD_Query") %>',
-                    success: function (data) {
-                        performance_val = parseFloat(data);
-                        if (performance_val != 0) {
-                            $(".performance").append(performance_val.toFixed(2) + "%");
-                            if (performance_val > upper) {
-                                $(".performance").addClass("green");
-                            } else if (performance_val > lower && performance_val < upper) {
-                                $(".performance").addClass("yellow");
-                            } else if (performance_val < lower) {
-                                $(".performance").addClass("red");
-                            }
-                        } else {
-                            $(".performance").append("N/A");
-                        }
-                    }
+                    url: '<%= Url.Action("getPerformance", "RePD_Query") %>'                        
                 });
 
             //Still needs to be done!
-                $.ajax({
+                var ajaxqos = $.ajax({
                     data: "month=" + sessionStorage["month"],
-                    url: '<%= Url.Action("getQoS", "RePD_Query") %>',
-                    success: function (data) {
+                    url: '<%= Url.Action("getQoS", "RePD_Query") %>'
+            });
+
+            //It just so happens that it works. But fix it.
+            var ajaxlatency = $.ajax({
+                data: "month=" + sessionStorage["month"],
+                url: '<%= Url.Action("getLatency", "RePD_Query") %>'
+            });
+
+            ajaxreliability.done(function(data) {
+                reliability_val = parseFloat(data);
+                if (reliability_val != 0) {
+                    $(".reliability").append(reliability_val.toFixed(2) + "%");
+                    if (reliability_val > upper) {
+                        $(".reliability").addClass("green");
+                    } else if (reliability_val > lower && reliability_val < upper) {
+                        $(".reliability").addClass("yellow");
+                    } else if (reliability_val < lower) {
+                        $(".reliability").addClass("red");
+                    }
+                } else {
+                    $(".reliability").append("N/A");
+                }
+                ajaxperformance.done(function(data) {
+                    performance_val = parseFloat(data);
+                    if (performance_val != 0) {
+                        $(".performance").append(performance_val.toFixed(2) + "%");
+                        if (performance_val > upper) {
+                            $(".performance").addClass("green");
+                        } else if (performance_val > lower && performance_val < upper) {
+                            $(".performance").addClass("yellow");
+                        } else if (performance_val < lower) {
+                            $(".performance").addClass("red");
+                        }
+                    } else {
+                        $(".performance").append("N/A");
+                    }
+                    ajaxqos.done(function(data) {
                         $(".qos").append(QoS_val.toFixed(2) + "%");
                         if (QoS_val > upper) {
                             $(".qos").addClass("green");
@@ -85,28 +95,24 @@
                         } else if (QoS_val < lower) {
                             $(".qos").addClass("red");
                         }
-                    }
-            });
-
-            //It just so happens that it works. But fix it.
-            $.ajax({
-              data: "month=" + sessionStorage["month"],
-              url: '<%= Url.Action("getLatency", "RePD_Query") %>',
-              success: function (data) {
-                  latency = parseInt(data);
-                  if (latency != 0) {
-                      $(".latency").append(latency + " ms");
-                      if (latency > upper) {
-                          $(".latency").addClass("green");
-                      } else if (latency > lower && latency < upper) {
-                          $(".latency").addClass("yellow");
-                      } else if (latency < lower) {
-                          $(".latency").addClass("red");
-                      }
-                  } else {
-                      $(".latency").append("N/A");
-                  }
-               }
+                        ajaxlatency.done(function(data) {
+                            latency = parseInt(data);
+                            if (latency != 0) {
+                                $(".latency").append(latency + " ms");
+                                if (latency > upper) {
+                                    $(".latency").addClass("green");
+                                } else if (latency > lower && latency < upper) {
+                                    $(".latency").addClass("yellow");
+                                } else if (latency < lower) {
+                                    $(".latency").addClass("red");
+                                }
+                            } else {
+                                $(".latency").append("N/A");
+                            }
+                            $("#loading").fadeOut();
+                        });
+                    });
+                });
             });
         });
     </script>
@@ -216,7 +222,7 @@
                     graph1.type = "line";
                     graph1.valueField = propertyName;
                     graph1.lineColor = "#008cba";
-                    graph1.balloonText = "<b><span style='font-size:14px;'>[[title]]</span></b><br />[[category]]<br /><span style='font-size:14px;'>Milliseconds: [[value]]</span>";
+                    graph1.balloonText = "<b><span style='font-size:14px;'>[[title]]</span></b><br />[[category]]<br /><span style='font-size:14px;'>Reliability: [[value]]</span>";
                     graph1.title = "Reliability";
                     graph1.bullet = bullets[i];
                     graph1.bulletSize = 10;
@@ -271,7 +277,7 @@
                     graph1.type = "line";
                     graph1.valueField = propertyName;
                     graph1.lineColor = "#008cba";
-                    graph1.balloonText = "<b><span style='font-size:14px;'>[[title]]</span></b><br />[[category]]<br /><span style='font-size:14px;'>Reliability: [[value]]</span>";
+                    graph1.balloonText = "<b><span style='font-size:14px;'>[[title]]</span></b><br />[[category]]<br /><span style='font-size:14px;'>Performance: [[value]]</span>";
                     graph1.title = "Performance";
                     graph1.bullet = bullets[i];
                     graph1.bulletSize = 10;
@@ -325,7 +331,7 @@
                     graph1.type = "line";
                     graph1.lineColor = "#008cba";
                     graph1.valueField = propertyName;
-                    graph1.balloonText = "<b><span style='font-size:14px;'>[[title]]</span></b><br />[[category]]<br /><span style='font-size:14px;'>Reliability: [[value]]</span>";
+                    graph1.balloonText = "<b><span style='font-size:14px;'>[[title]]</span></b><br />[[category]]<br /><span style='font-size:14px;'>95th Percentile: [[value]]</span>";
                     graph1.title = "95th Percentile";
                     graph1.bullet = bullets[i];
                     graph1.bulletSize = 10;

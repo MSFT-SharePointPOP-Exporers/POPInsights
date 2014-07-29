@@ -4,21 +4,15 @@
     <link href="../../Content/DCHM.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
-            $("button").click(function () {
-                $("#loading").fadeIn();
-            });
-
             if (window.location.search == "") {
                 updateQueryString();
             } else  {
                 $("#rendering h1").text(sessionStorage["datacen"]);
-                $("#loading").fadeIn();
                 $.ajax({
                     data: sessionStorage["query"],
                     url: '<%= Url.Action("getNetworkFarm", "ViRT_Query") %>',
                     dataType: "json",
                     success: function (data) {
-                        console.log(data);
                        $(".dchm").append('<ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">');
                         if (data != null) {
                             for (var x = 0; x < data.length; x++) {
@@ -42,9 +36,6 @@
                             }
                         }
                     },
-                    complete: function (data) {
-                        $("#loading").fadeOut("slow");
-                    }
                 });
             }
             });
@@ -66,8 +57,7 @@
 </asp:Content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
-   <div class = "dchm">
-    </div>
+   <div class = "dchm"></div>
         <div id ="legendBar" class="small-12 medium-12 large-12 columns">
         <ul class="small-block-grid-5 medium-block-grid-5 large-block-grid-5">
             <li><div class="green legend">100.00-99.90</div></li>
