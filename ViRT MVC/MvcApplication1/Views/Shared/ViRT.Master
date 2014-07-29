@@ -46,7 +46,7 @@
                       arr = [];
                       for (var x = 0; x < data.length; x++) {
                           if (data[x].Component.indexOf(sessionStorage["pipeline"]) > -1 && sessionStorage["pipeline"] != "Overview") {
-                              arr.push(data[x].Component + "<br><a href='../Home/PercentData'>" + data[x].Percent + "%</a>");
+                              arr.push(data[x].Component + "<br><a href='../Home/PercentData'>" + data[x].Percent.toFixed(2) + "%</a>");
                           }
                       }
                       if (sessionStorage["pipeline"] == "Overview") {
@@ -66,7 +66,7 @@
                       for (var x = 0; x < data.length; x++) {
                           arr.push("<tr>");
                           arr.push("<td class='overview_component'>" + data[x].Component + "</td>");
-                          arr.push("<td class='overview_percent'>" + data[x].Percent + "%</td>");
+                          arr.push("<td class='overview_percent'>" + data[x].Percent.toFixed(2) + "%</td>");
                           arr.push("</tr>");
                       }
                       $("tbody").html(arr.join(''));
