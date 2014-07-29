@@ -12,7 +12,7 @@
         height: 100%;
         margin: 0;
         background-color: #0F0F0F;
-        overflow:hidden;
+        overflow-y:scroll;
         font-family:"Segoe UI",Verdana,Helvetica,sans-serif;
     }
 
@@ -130,7 +130,7 @@
     #overviewbar {
         background-color:#1E1E1E;
         height: 100%;
-        padding: 60px 2% 0px 2%;
+        padding: 60px 1.3% 0px 1.3%;
         float: left;
     }
 
@@ -142,17 +142,19 @@
     }
 
     .overview_component {
-        float:left;
+        /* float:left; */
         overflow:hidden;
         color:#e1e1e1;
         line-height: 2em;
     }
 
     .overview_percent {
-        float:right;
+        /* float:right; */
         color:#e1e1e1;
         line-height: 2em;
-    }
+    
+        text-align: right;
+}
 
     table tr.even, table tr.alt, table tr:nth-of-type(even) {
         background:none;
@@ -162,14 +164,14 @@
 
     #rendering {
         background-color: #0F0F0F;
-        height: 96%;
+        height: 100%;
         padding-top: 60px;
         padding-left: 0;
         padding-right:0;
         float: left;
         -moz-box-shadow:    inset 0 0 10px #000000;
         -webkit-box-shadow: inset 0 0 10px #000000;
-        box-shadow:         inset 0 0 10px #000000;
+        /* box-shadow:         inset 0 0 10px #000000; */
                 overflow:hidden;
 
     
@@ -227,7 +229,9 @@
         height: 78%;
         overflow: hidden;
         margin-top: 1%;
-    }
+    
+        padding-bottom: 10%;
+}
 
      .graph_header {
         text-align:center;
