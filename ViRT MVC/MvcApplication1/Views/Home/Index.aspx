@@ -10,12 +10,11 @@
 </asp:Content>
 
 <asp:Content ID="aboutTitle" ContentPlaceHolderID="TitleContent" runat="server">
-World Heat Map
+//popinsights
 </asp:Content>
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>World Heat Map</h1>
-    <div id="mapdiv" style="width: 100%; height: 72%;">
+    <div id="mapdiv" style="width: 100%; height: 85%;">
 		<script>
 			/*
 				although ammap has methos like getAreaCenterLatitude and getAreaCenterLongitude,
