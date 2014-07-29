@@ -9,8 +9,8 @@ var latency;
 
 function setDefaults() {
     sessionStorage["team"] = "Authentication";
-    sessionStorage["month"] = new Date(date.getFullYear(),date.getMonth()-1, 1).toString("yyyy-MM-dd");
-
+    sessionStorage["month"] = new Date(date.getFullYear(), date.getMonth() - 1, 1).toString("yyyy-MM-dd");
+    sessionStorage["changed"] == "false";
 }
 
 function updateQueryString() {
@@ -24,6 +24,7 @@ function updateQueryString() {
 function setSessionStorage() {
     sessionStorage["team"] = $.QueryString("team");
     sessionStorage["month"] = $.QueryString("month");
+    sessionStorage["changed"] == "true";
 }
 
 function setFields() {

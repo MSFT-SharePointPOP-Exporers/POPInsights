@@ -17,60 +17,54 @@
           $(document).ready(function () {
               var arr = [];
 
-              $(document).ajaxSend(function () {
-                  $("#loading").fadeIn();                                     
-              });
-
-              $(document).ajaxComplete(function () {
-                  $("#loading").fadeOut();
-              });
-
-              $.ajax({
+              var pipelines = $.ajax({
                   contentType: "application/json",
                   data: "",
                   url: '<%= Url.Action("getPipelines", "ViRT_Query") %>',
-                  dataType: "json",
-                  success: function (data) {
-                      for (var x = data.length - 1; x >= 0; x--) {
-                          $(".pipelines").append("<li class='pipe' id='" + data[x].Pipeline + "' onclick='setPipeline(this.id)'><a href='#'>" + data[x].Pipeline + "</a></li>");
-                      }
-                      setSelectedPipeline();
-                  }
+                  dataType: "json"                      
               });
 
-              $.ajax({
+              var overviewheader = $.ajax({
                   data: "pipeline=Overview&start=" + sessionStorage["start"] + "&end=" + sessionStorage["end"],
                   url: '<%= Url.Action("getOverview", "ViRT_Query") %>',
-                  dataType: "json",
-                  success: function (data) {
-                      arr = [];
-                      for (var x = 0; x < data.length; x++) {
-                          if (data[x].Component.indexOf(sessionStorage["pipeline"]) > -1 && sessionStorage["pipeline"] != "Overview") {
-                              arr.push(data[x].Component + "<br><a href='../Home/PercentData'>" + data[x].Percent + "%</a>");
-                          }
-                      }
-                      if (sessionStorage["pipeline"] == "Overview") {
-                          $("#overviewbar h1").html("Overview");
-                      } else {
-                          $("#overviewbar h1").html(arr.join(''));
-                      }
-                   }
+                  dataType: "json",                      
               });
 
-              $.ajax({
+              var overviewlist = $.ajax({
                   data: sessionStorage["query"],
                   url: '<%= Url.Action("getOverview", "ViRT_Query") %>',
                   dataType: "json",
-                  success: function (data) {
-                      arr = [];
-                      for (var x = 0; x < data.length; x++) {
-                          arr.push("<tr>");
-                          arr.push("<td class='overview_component'>" + data[x].Component + "</td>");
-                          arr.push("<td class='overview_percent'>" + data[x].Percent + "%</td>");
-                          arr.push("</tr>");
-                      }
-                      $("tbody").html(arr.join(''));
+              });
+
+              pipelines.done(function (data) {
+                  for (var x = data.length - 1; x >= 0; x--) {
+                      $(".pipelines").append("<li class='pipe' id='" + data[x].Pipeline + "' onclick='setPipeline(this.id)'><a href='#'>" + data[x].Pipeline + "</a></li>");
                   }
+                  setSelectedPipeline();
+                  overviewheader.done(function(data) {
+                      if (sessionStorage["pipeline"] == "Overview") {
+                          $("#overviewbar h1").html("Overview");
+                      } else {
+                          arr = [];
+                          for (var x = 0; x < data.length; x++) {
+                              if (data[x].Component.indexOf(sessionStorage["pipeline"]) > -1 && sessionStorage["pipeline"] != "Overview") {
+                                  arr.push(data[x].Component + "<br><a href='../Home/PercentData'>" + data[x].Percent.toFixed(2) + "%</a>");
+                              }
+                          }
+                          $("#overviewbar h1").html(arr.join(''));
+                      }
+                      overviewlist.done(function(data) {
+                          arr = [];
+                          for (var x = 0; x < data.length; x++) {
+                              arr.push("<tr>");
+                              arr.push("<td class='overview_component'>" + data[x].Component + "</td>");
+                              arr.push("<td class='overview_percent'>" + data[x].Percent.toFixed(2) + "%</td>");
+                              arr.push("</tr>");
+                          }
+                          $("tbody").html(arr.join(''));
+                          $("#loading").fadeOut();
+                      });
+                  });
               });
 
 
@@ -106,14 +100,15 @@
   </head>
   <body>
     <nav class="top-bar" data-topbar>
-      <!-- Left Nav Section -->
-      <ul class="breadcrumbs show-for-large-up">
-      </ul>
-      <ul class="title-area">
-        <li class="name">
-        </li>
+        <ul class="title-area">
+            <li class="name">
+               <h1><a href="#">//popinsights</a></h1>
+            </li>
         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+      <!-- Left Nav Section -->
+      <ul class="breadcrumbs show-for-large-up">
       </ul>
       <section class="top-bar-section">
         <!-- Right Nav Section -->
@@ -159,8 +154,8 @@
     </div>
       <div id="loading">
 	        <h1>Loading....</h1>
-           <!-- <img src="http://www.newmammal.com/wp-content/uploads/2011/09/Funky-Loading-Gif-P-013.gif" alt="loading"/>-->
-          <img src="../../Images/loadinfo.net.gif" />
+            <!-- <img src="http://www.newmammal.com/wp-content/uploads/2011/09/Funky-Loading-Gif-P-013.gif" alt="loading"/>-->
+         <img src="../../Images/loadinfo.net.gif" />
 	    </div>
   </body>
 </html>

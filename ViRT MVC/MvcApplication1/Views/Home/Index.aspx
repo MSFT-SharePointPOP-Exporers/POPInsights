@@ -10,12 +10,11 @@
 </asp:Content>
 
 <asp:Content ID="aboutTitle" ContentPlaceHolderID="TitleContent" runat="server">
-World Heat Map
+//popinsights
 </asp:Content>
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>World Heat Map</h1>
-    <div id="mapdiv" style="width: 100%; height: 72%;">
+    <div id="mapdiv" style="width: 100%; height: 94%;">
 		<script>
 			/*
 				although ammap has methos like getAreaCenterLatitude and getAreaCenterLongitude,
@@ -80,7 +79,7 @@ World Heat Map
 					var val = dataItem.value;
 					var id = dataItem.code;
 					var des = "Reliability of Data Center: "
-					des = des.concat(val);
+					des = des.concat(val.toFixed(2) + "%");
 					des = des.concat("</br></br><a href='#' id='" + dataItem.code.substring(0,3) + "' onclick='setDatacenter(this.id)'>Detailed Data Center View</a>");
 
 					dataProvider.images.push({

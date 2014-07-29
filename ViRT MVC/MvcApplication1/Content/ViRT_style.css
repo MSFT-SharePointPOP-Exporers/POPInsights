@@ -13,12 +13,13 @@
         margin: 0;
         background-color: #0F0F0F;
         overflow:hidden;
+        font-family:"Segoe UI",Verdana,Helvetica,sans-serif;
     }
 
     h1 {
         text-align:center;
         margin-bottom:30px;
-        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+        font-family:"Segoe UI",Verdana,Helvetica,sans-serif;
     }
 
     h1, h2 {
@@ -48,6 +49,12 @@
 
     select {
         width:inherit;
+    }
+
+    span {
+        font-family: Segoe WP;
+        font-weight: 300;
+        font-size: 1.2em;
     }
 
     /* Color Scheme for Legend Bar and Data Center Heat Map */
@@ -89,7 +96,7 @@
 
     .breadcrumbs {
         border:none;
-        padding:0.98em 0.875rem 0.5625rem;
+        padding: 1.10em 0.875rem 0.9625rem;
         background:none; 
     }
 
@@ -115,6 +122,7 @@
         padding-top: 60px;
         padding-bottom:0px;
         background-color: #0F0F0F;
+        font-family: "Segoe UI",Verdana,Helvetica,sans-serif;
     }
 
     /* Overview Bar */
@@ -130,7 +138,7 @@
         font-size: 25px;
         margin-bottom: 30%;
         color:#e4e4e4;
-        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+        font-family:"Segoe UI",Verdana,Helvetica,sans-serif;
     }
 
     .overview_component {
@@ -154,7 +162,7 @@
 
     #rendering {
         background-color: #0F0F0F;
-        height: 100%;
+        height: 96%;
         padding-top: 60px;
         padding-left: 0;
         padding-right:0;
@@ -174,9 +182,8 @@
         background-color: #0F0F0F;
         bottom: 0;
         padding: 0 30.5%;
-        position:relative;
+        position: absolute;
         text-align:center;
-        margin-top: 3%;
 }
     .legend {
         font-size:0.73em;
@@ -206,7 +213,7 @@
 
     #small_dates label{
         color:#e4e4e4;
-        font-family:"Segoe WP",Verdana,Helvetica,sans-serif;
+        font-family:"Segoe UI",Verdana,Helvetica,sans-serif;
     }
 
     .ui-datepicker, .ui-datepicker-title select,.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
@@ -244,20 +251,20 @@
     /* Loading Screen */
 
     	#loading {
-		display: none;
 		z-index: 100;
 		width: 100%;
 		text-align: center;
 		position: fixed;
 		height: 100%;
 		top: 0;
-		background-color: rgba(0, 0, 0, 0.93);
+		background-color: rgba(0, 0, 0, 0.95);
 	}
 
 	    #loading h1 {
 		    margin-bottom: 1%;
             margin-top: 18%;
-            font-family: "Segoe WP",Verdana,Helvetica,sans-serif;
+            font-size:2.75rem;
+            font-family: "Segoe UI Light",Verdana,Helvetica,sans-serif;
 	    }
 
 	#loading img {
@@ -270,6 +277,13 @@
      /* max-width 640px, mobile-only styles*/
 
     @media only screen and (max-width: 40em) {
+        .top-bar {
+            background-color: #0f0f0f;
+        }
+       
+         .top-bar.expanded .title-area {
+            background: #0F0F0F;
+        }
         
         body {
             overflow-y:scroll;

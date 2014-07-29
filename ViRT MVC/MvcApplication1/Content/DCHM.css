@@ -77,6 +77,30 @@ list-style-type: none;
         color:black;
     }
 
+    /* Loading Screen */
+
+    	#loading {
+		z-index: 100;
+		width: 100%;
+		text-align: center;
+		position: fixed;
+		height: 100%;
+		top: 0;
+		background-color: rgba(0, 0, 0, 0.95);
+	}
+
+	    #loading h1 {
+		    margin-bottom: 1%;
+            margin-top: 18%;
+            font-family: "Segoe UI Light",Verdana,Helvetica,sans-serif;
+	    }
+
+	#loading img {
+		width:48px;
+		height:48px;
+		margin:0 auto;
+	}
+
 @media only screen and (max-width: 40em) {
     .dchm {
         overflow:visible;

@@ -1276,11 +1276,13 @@ meta.foundation-mq-topbar {
       font-size: 1.0625rem;
       margin: 0; }
       .top-bar .name h1 a {
-        font-weight: normal;
+        font-weight: 300;
         color: white;
         width: 75%;
         display: block;
-        padding: 0 15px; }
+        padding: 0 32px; 
+        font-family: Segoe UI Light;
+}
   .top-bar .toggle-topbar {
     position: absolute;
     right: 0;
