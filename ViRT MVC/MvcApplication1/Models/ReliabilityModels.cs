@@ -133,19 +133,9 @@ namespace MvcApplication1.Models
 		{
 			//Query for tags of component
 			dbConnect.Open();
-			String query = "SELECT SuccessTag, FailureTag FROM Component WHERE Component = '" + pComponent + "'";
-			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
-			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
-
-			//Get success and failure tags into a table
-			DataTable twoTags = new DataTable();
-			twoTags.Load(queryCommandReader);
-
-			//Get the names of the two tags
-			DataColumn col = twoTags.Columns[0];
-			String successTag = (String)twoTags.Rows[0][col.ColumnName];
-			col = twoTags.Columns[1];
-			String failureTag = (String)twoTags.Rows[0][col.ColumnName];
+			String[] tags = Tags(pComponent);
+			String successTag = tags[0];
+			String failureTag = tags[1];
 
 			//Fill DataTables with the hits for that tag
 			DataTable dt = ComponentRawHitsDataTable(successTag, failureTag);
@@ -258,7 +248,7 @@ namespace MvcApplication1.Models
 			for (int i = 0; i < allDCs.Length; i++)
 			{
 				ChangeDataCenter(allDCs[i]);
-				toAdd["DataCenter"] = networkID;
+				toAdd["DataCenter"] = dataCenter;
 				toAdd["Percent"] = DataCenterOnePercent(successTag, failureTag);
 
 				retTable.Rows.Add(toAdd);
