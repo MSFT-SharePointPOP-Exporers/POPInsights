@@ -312,6 +312,9 @@ namespace MvcApplication1.Models
 		}
 
 
+		/*Everything after this is private methods or helper methods*/
+
+
 		/// <summary>
 		/// Retrieves the tags for a given component
 		/// </summary>
@@ -329,7 +332,6 @@ namespace MvcApplication1.Models
 
 			return tags;
 		}
-
 
 		/// <summary>
 		/// Helper method for DCHM. calculates all percents for all farms in a network
@@ -355,8 +357,12 @@ namespace MvcApplication1.Models
 			return farmPercent;
 		}
 
-
-
+		/// <summary>
+		/// Helper method for CalculateDataCenterHeatMap which calculates a single reliability percent for a network based off the pipeline
+		/// </summary>
+		/// <param name="successTag">Success Tag</param>
+		/// <param name="failureTag">Failure Tag</param>
+		/// <returns></returns>
 		private decimal NetworkOnePercent(String successTag, String failureTag)
 		{
 			String query = "SELECT CAST(SUM(CASE when Tag = '" + successTag + "' then Hits else 0 END) AS DECIMAL)" +
@@ -376,6 +382,12 @@ namespace MvcApplication1.Models
 			return (decimal)onePer.Rows[0][0];
 		}
 
+		/// <summary>
+		/// Helper method for CalculateWorldMapCircle which caluclates a single reliability percent for a datacenter based off the pipeline
+		/// </summary>
+		/// <param name="successTag"></param>
+		/// <param name="failureTag"></param>
+		/// <returns></returns>
 		private decimal DataCenterOnePercent(String successTag, String failureTag)
 		{
 			String query = "SELECT CAST(SUM(CASE when Tag = '" + successTag + "' then Hits else 0 END) AS DECIMAL)" +
@@ -395,8 +407,6 @@ namespace MvcApplication1.Models
 			return (decimal)onePer.Rows[0][0];
 		}
 
-		/*Everything after this is private methods or helper methods*/
-
 		/// <summary>
 		/// Calculates the reliability of a single component
 		/// Retrieves 
@@ -414,7 +424,7 @@ namespace MvcApplication1.Models
 		}
 
 		/// <summary>
-		/// Calculates the reliability of a component through its tags
+		/// Calculates the reliability of a component through its tags for a specified datacenter, network, and farm
 		/// </summary>
 		/// <param name="sTag">Success Tag of component</param>
 		/// <param name="fTag">Failure Tag of component</param>
@@ -450,11 +460,17 @@ namespace MvcApplication1.Models
 			return tagTable;
 		}
 
+		/// <summary>
+		/// Retrieves the raw hit numbers for the raw data graph
+		/// </summary>
+		/// <param name="sTag">Success Tag</param>
+		/// <param name="fTag">Failure Tag</param>
+		/// <returns>DataTable with success hits and failure hits</returns>
 		private DataTable ComponentRawHitsDataTable(String sTag, String fTag)
 		{
 			//Strings that create the query
-			String query = "SELECT DATEADD(HOUR, Hour, Date) AS Date, SUM(CASE when Tag = '" + sTag + "' then Hits else 0 END) AS '" + sTag +
-				"', SUM(CASE when Tag = '" + fTag + "' then Hits else 0 END ) AS '" + fTag + "' FROM Prod_Reliability";
+			String query = "SELECT DATEADD(HOUR, Hour, Date) AS Date, SUM(CASE when Tag = '" + sTag + "' then Hits else 0 END) AS 'Success Hits'," + 
+				" SUM(CASE when Tag = '" + fTag + "' then Hits else 0 END ) AS 'Failure Hits' FROM Prod_Reliability";
 			String where = " WHERE Date >= '" + start.ToString() + "' AND Date < '" + end.ToString() + "'";
 			String groupBy = " GROUP BY Date, Hour ORDER BY Date";
 
@@ -480,12 +496,11 @@ namespace MvcApplication1.Models
 			return tagTable;
 		}
 
-		/*
-		 * Retrieves the names of the components for a pipeline
-		 * 
-		 * @param pPipeline		The pipeline whose components will be returned
-		 * @return		Array of componets for the pipeline
-		 */
+		/// <summary>
+		/// Retrieves the names of the components for a pipeline
+		/// </summary>
+		/// <param name="pPipeline">Specified pipeline</param>
+		/// <returns>Array of component names of a pipeline</returns>
 		public String[] GetComponents(String pPipeline)
 		{
 			dbConnect.Open();
@@ -507,11 +522,10 @@ namespace MvcApplication1.Models
 			return compsArray;
 		}
 
-		/*
-		 * Retrieves all the pipeline names 
-		 * 
-		 * @return a String array of all the pipelines
-		 */
+		/// <summary>
+		/// Gets all the pipeline names
+		/// </summary>
+		/// <returns>DataTable with pipelines</returns>
 		public DataTable GetAllPipelines()
 		{
 			dbConnect.Open();
@@ -525,19 +539,17 @@ namespace MvcApplication1.Models
 			return pipelines;
 		}
 
-		/*
-		 * 
-		 * 
-		 */
+		/// <summary>
+		/// Gets a string array of all DataCenters
+		/// </summary>
+		/// <returns>string array of all DataCenters</returns>
 		private String[] GetAllDataCentersArray()
 		{
-			
 			String query = "SELECT DataCenter FROM DataCenter";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable dataCenters = new DataTable();
 			dataCenters.Load(queryCommandReader);
-
 
 			String[] dcArray = new String[dataCenters.Rows.Count];
 
@@ -548,11 +560,10 @@ namespace MvcApplication1.Models
 			return dcArray;
 		}
 
-		/*
-		 * Retrieves the datacenter with the lat and long
-		 * 
-		 * @return		DataTable with latitude and longitude
-		 */
+		/// <summary>
+		/// Retrieves the datacenter with the lat and long
+		/// </summary>
+		/// <returns>DataTable with latitude and longitude</returns>
 		public DataTable GetDataCenterLatLong()
 		{
 			dbConnect.Open();
@@ -565,12 +576,11 @@ namespace MvcApplication1.Models
 			return dclatlong;
 		}
 
-
-		/*
-		 * Retrieves all the NetworkID's for a specific dataCenter
-		 * 
-		 * @return a DataTable of the NetworkID's
-		 */
+		/// <summary>
+		/// Gets all the NetworkID's for a specific DataCenter
+		/// </summary>
+		/// <param name="dataCenter">Specified DataCenter</param>
+		/// <returns>DataTable with all networks for the DataCenter</returns>
 		public DataTable GetNetworks(String dataCenter)
 		{
 			String query = "SELECT DISTINCT NetworkID FROM DataCenterNetworkId WHERE DataCenter = '" + dataCenter + "'";
@@ -581,14 +591,10 @@ namespace MvcApplication1.Models
 			return networks;
 		}
 
-
-
-
-		/*
-		* Retrieves all of the available networks
-		* 
-		* @return		A DataTable of All Networks
-		*/
+		/// <summary>
+		/// Retrieves all of the networks
+		/// </summary>
+		/// <returns>A DataTable of All Networks</returns>
 		public DataTable GetAllNetworks()
 		{
 			dbConnect.Open();
@@ -601,11 +607,10 @@ namespace MvcApplication1.Models
 			return allNetworks;
 		}
 
-		/*
-		* Retrieves all of the available farms
-		* 
-		* @return	A DataTable of All Farms
-		*/
+		/// <summary>
+		/// Retrieves all of the farms
+		/// </summary>
+		/// <returns>A DataTable of All Farms</returns>
 		public DataTable GetAllFarms()
 		{
 			dbConnect.Open();
@@ -618,23 +623,21 @@ namespace MvcApplication1.Models
 			return allFarms;
 		}
 
-		/*
-		 * Changes the start and end date
-		 * 
-		 * @param pStart		New start date
-		 * @param pEnd			New end date
-		 */
+		/// <summary>
+		/// Changes the start and end date
+		/// </summary>
+		/// <param name="pStart">New start date</param>
+		/// <param name="pEnd">New end date</param>
 		public void ChangeDate(DateTime pStart, DateTime pEnd)
 		{
 			start = pStart;
 			end = pEnd.AddDays(1);
 		}
 
-		/*
-		 * Changes the Data Center and changes network and farm to default
-		 * 
-		 * @param pDataCenter		Desired new data center
-		 */
+		/// <summary>
+		/// Changes the Data Center and changes network and farm to default
+		/// </summary>
+		/// <param name="pDataCenter">Desired new data center</param>
 		public void ChangeDataCenter(String pDataCenter)
 		{
 			dataCenter = pDataCenter;
@@ -642,22 +645,20 @@ namespace MvcApplication1.Models
 			farmID = -1;
 		}
 
-		/*
-		 * Changes the Network and changes the farm to the default
-		 * 
-		 * @param pNetworkID		Desired new networkID
-		 */
+		/// <summary>
+		/// Changes the Network and changes the farm to the default
+		/// </summary>
+		/// <param name="pNetworkID">Desired new networkID</param>
 		public void ChangeNetworkID(int pNetworkID)
 		{
 			networkID = pNetworkID;
 			farmID = -1;
 		}
 
-		/*
-		 * Changes the pipeline
-		 * 
-		 * @param pPipeline		New Pipeline
-		 */
+		/// <summary>
+		/// Changes the pipeline
+		/// </summary>
+		/// <param name="pPipeline">New Pipeline</param>
 		public void ChangePipeline(String pPipeline)
 		{
 			pipeline = pPipeline;
