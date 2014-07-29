@@ -72,7 +72,7 @@ namespace MvcApplication1.Models
 		{
 			//Retrieves all the components for the specified pipeline
 			dbConnect.Open();
-			String query = "SELECT Component FROM PipelineComponent WHERE Pipeline = '" + pPipeline + "'";
+			String query = "SELECT Component FROM PipelineComponent_Demo WHERE Pipeline = '" + pPipeline + "'";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable componentTable = new DataTable();
@@ -156,7 +156,7 @@ namespace MvcApplication1.Models
 			dbConnect.Open();
 
 			//Get all components from pipeline
-			String query = "SELECT Component FROM PipelineComponent WHERE Pipeline = '" + pPipeline + "'";
+			String query = "SELECT Component FROM PipelineComponent_Demo WHERE Pipeline = '" + pPipeline + "'";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 
@@ -322,7 +322,7 @@ namespace MvcApplication1.Models
 		/// <returns>String array with SuccessTag as index 0 and FailureTag as index 1</returns>
 		private String[] Tags(String component)
 		{
-			String query = "SELECT SuccessTag, FailureTag FROM Component WHERE Component = '" + component + "'";
+			String query = "SELECT SuccessTag, FailureTag FROM Component_Demo WHERE Component = '" + component + "'";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable twoTags = new DataTable();
@@ -504,7 +504,7 @@ namespace MvcApplication1.Models
 		public String[] GetComponents(String pPipeline)
 		{
 			dbConnect.Open();
-			String query = "SELECT Component FROM PipelineComponent WHERE Pipeline = '" + pPipeline + "'";
+			String query = "SELECT Component FROM PipelineComponent_Demo WHERE Pipeline = '" + pPipeline + "'";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable componentsForPipeline = new DataTable();
