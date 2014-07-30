@@ -277,7 +277,7 @@ namespace MvcApplication1.Models
 			DataRow toAdd = retTable.NewRow();
 
 			//All the NetworkIds in the current DataCenter
-			DataTable allNetsinDC = GetNetworks(dataCenter);
+			DataTable allNetsinDC = GetNetworks();
 
 			String[] tags;
 
@@ -579,11 +579,10 @@ namespace MvcApplication1.Models
 		/// <summary>
 		/// Gets all the NetworkID's for a specific DataCenter
 		/// </summary>
-		/// <param name="dataCenter">Specified DataCenter</param>
 		/// <returns>DataTable with all networks for the DataCenter</returns>
-		public DataTable GetNetworks(String dataCenter)
+		public DataTable GetNetworks()
 		{
-			String query = "SELECT DISTINCT NetworkID FROM DataCenterNetworkId WHERE DataCenter = '" + dataCenter + "'";
+			String query = "SELECT DISTINCT NetworkID FROM DataNetFarm_Demo WHERE DataCenter = '" + dataCenter + "'";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable networks = new DataTable();
@@ -598,7 +597,7 @@ namespace MvcApplication1.Models
 		public DataTable GetAllNetworks()
 		{
 			dbConnect.Open();
-			String query = "SELECT DISTINCT NetworkID FROM DataCenterNetworkId";
+			String query = "SELECT DISTINCT NetworkID FROM DataNetFarm_Demo";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable allNetworks = new DataTable();
@@ -614,7 +613,7 @@ namespace MvcApplication1.Models
 		public DataTable GetAllFarms()
 		{
 			dbConnect.Open();
-			String query = "SELECT DISTINCT FarmID FROM NetworkIdFarmId";
+			String query = "SELECT DISTINCT FarmID FROM DataNetFarm_Demo";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable allFarms = new DataTable();
