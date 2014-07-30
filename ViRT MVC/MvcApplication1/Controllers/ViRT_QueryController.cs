@@ -23,6 +23,7 @@ namespace MvcApplication1.Controllers
         public string getOverview()
         {               
             test.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
+            test.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
             return JsonConvert.SerializeObject(test.CalculateOverviewBar(Request.QueryString["pipeline"]));
         }
 
