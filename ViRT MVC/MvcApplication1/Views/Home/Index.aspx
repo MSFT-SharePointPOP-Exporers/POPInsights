@@ -14,7 +14,7 @@
 </asp:Content>
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="mapdiv" style="width: 100%; height: 94%;">
+    <div id="mapdiv">
 		<script>
 			/*
 				although ammap has methos like getAreaCenterLatitude and getAreaCenterLongitude,

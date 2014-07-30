@@ -31,6 +31,7 @@ namespace MvcApplication1.Controllers
             test.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
             test.ChangeDataCenter(Request.QueryString["datacen"]);
             test.ChangeNetworkID(Convert.ToInt32(Request.QueryString["network"]));
+            test.ChangeFarmID(Convert.ToInt32(Request.QueryString["farm"]));
             return JsonConvert.SerializeObject(test.CalculateOverviewBar(Request.QueryString["pipeline"]));
         }
 

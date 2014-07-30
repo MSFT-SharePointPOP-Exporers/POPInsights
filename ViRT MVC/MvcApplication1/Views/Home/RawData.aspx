@@ -82,7 +82,7 @@
 
 <asp:Content ID="Content" ContentPlaceHolderID="FeaturedContent" runat="server">
     <div class="graph_header">
-        <h1>RawData</h1>
+        <h1>Raw Data</h1>
         <a href="PercentData" id="PercentDataLink">View Component Reliability</a>
     </div>
 
