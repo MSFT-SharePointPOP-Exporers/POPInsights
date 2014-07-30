@@ -545,7 +545,7 @@ namespace MvcApplication1.Models
 		/// <returns>string array of all DataCenters</returns>
 		private String[] GetAllDataCentersArray()
 		{
-			String query = "SELECT DataCenter FROM DataCenter";
+			String query = "SELECT DataCenter FROM DataCenter_Demo";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable dataCenters = new DataTable();
@@ -567,7 +567,7 @@ namespace MvcApplication1.Models
 		public DataTable GetDataCenterLatLong()
 		{
 			dbConnect.Open();
-			String query = "SELECT DataCenter, latitude, longitude FROM DataCenter";
+			String query = "SELECT DataCenter, latitude, longitude FROM DataCenter_Demo";
 			SqlCommand queryCommand = new SqlCommand(query, dbConnect);
 			SqlDataReader queryCommandReader = queryCommand.ExecuteReader();
 			DataTable dclatlong = new DataTable();
@@ -653,6 +653,15 @@ namespace MvcApplication1.Models
 		{
 			networkID = pNetworkID;
 			farmID = -1;
+		}
+
+		/// <summary>
+		/// Changes the farm
+		/// </summary>
+		/// <param name="pFarmID">Desired new FarmID</param>
+		public void ChangeFarmID(int pFarmID)
+		{
+			farmID = pFarmID;
 		}
 
 		/// <summary>
