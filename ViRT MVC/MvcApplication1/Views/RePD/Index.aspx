@@ -52,7 +52,6 @@
                     url: '<%= Url.Action("getQoS", "RePD_Query") %>'
             });
 
-            //It just so happens that it works. But fix it.
             var ajaxlatency = $.ajax({
                 data: "month=" + sessionStorage["month"],
                 url: '<%= Url.Action("getLatency", "RePD_Query") %>'
@@ -99,11 +98,9 @@
                             latency = parseInt(data);
                             if (latency != 0) {
                                 $(".latency").append(latency + " ms");
-                                if (latency > upper) {
+                                if (latency > 200) {
                                     $(".latency").addClass("green");
-                                } else if (latency > lower && latency < upper) {
-                                    $(".latency").addClass("yellow");
-                                } else if (latency < lower) {
+                                } else {
                                     $(".latency").addClass("red");
                                 }
                             } else {
