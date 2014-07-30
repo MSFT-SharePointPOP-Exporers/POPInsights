@@ -39,7 +39,7 @@
 				var objVal = averageDCPer[i];
 				var per = objVal["Percent"];
 
-				if(per > 99.90)	   {col = "$43ac6a";}
+				if(per > 99.90)	   {col = "#43ac6a";}
 				else if(per > 99.0){col = "#ffff51";}
 				else if(per > 95.0){col = "#c52e2e";}
 				else if(per > 85.0){col = "#8f0202";}

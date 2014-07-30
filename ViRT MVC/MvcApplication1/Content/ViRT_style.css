@@ -1,13 +1,5 @@
 ﻿    /*Default Styles*/
 
-    html {
-        height:100%;
-        margin:0;
-        padding:0;
-        overflow:hidden;
-
-    }
-
     body {
         height: 100%;
         margin: 0;
@@ -102,6 +94,15 @@
 
     .breadcrumbs > *.current {
         color: #E1E1E1;
+    }
+
+    .name h1 {
+        font-weight: 300;
+        color: white;
+        width: 75%;
+        display: block;
+        padding: 0 32px;
+        font-family: Segoe UI Light;
     }
     
     /* Pipeline Bar */                         
