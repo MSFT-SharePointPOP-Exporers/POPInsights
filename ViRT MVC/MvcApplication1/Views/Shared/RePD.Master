@@ -43,7 +43,7 @@
     <nav class="top-bar" data-topbar>
        <ul class="title-area">
             <li class="name">
-               <h1><a href="#">//popinsights</a></h1>
+               <h1>//popinsights</h1>
             </li>
         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -68,10 +68,10 @@
     </nav>
     <div id="teams" class="show-for-large-up large-1 columns">
     <ul class="side-nav teams">
-        <li class="team" id="TenantPlatform" onclick="setTeam(this.id)"><a href="#">Tenant Platform</a></li>
+        <li class="team" id="TenantPlatform" onclick="setTeam(this.id)"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Tenant Platform</a></li>
         <li class="team" id="Authentication" onclick="setTeam(this.id)"><a href="#">Authentication</a></li>
-        <li class="team" id="OneDrive" onclick="setTeam(this.id)"><a href="#">OneDrive</a></li>
-        <li class="team" id="Profile" onclick="setTeam(this.id)"><a href="#">Profile</a></li>
+        <li class="team" id="OneDrive" onclick="setTeam(this.id)"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">OneDrive</a></li>
+        <li class="team" id="Profile" onclick="setTeam(this.id)"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Profile</a></li>
     </ul>
     </div>
     <div id="rendering" class="small-12 medium-11 large-11 columns">

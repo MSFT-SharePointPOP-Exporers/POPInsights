@@ -36,6 +36,15 @@
         background-color:#1e1e1e;
     }
 
+       .name h1 {
+        font-weight: 300;
+        color: white;
+        width: 75%;
+        display: block;
+        padding: 0 32px;
+        font-family: Segoe UI Light;
+    }
+
  
     
         .breadcrumbs {

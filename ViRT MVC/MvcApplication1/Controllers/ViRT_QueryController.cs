@@ -20,10 +20,17 @@ namespace MvcApplication1.Controllers
             return JsonConvert.SerializeObject(test.GetAllPipelines());
         }
 
+        public string getOverviewHeader()
+        {
+            test.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
+            return JsonConvert.SerializeObject(test.CalculateOverviewBar("Overview"));
+        }
+
         public string getOverview()
         {               
             test.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
-            test.ChangeDate(Convert.ToDateTime(Request.QueryString["start"]), Convert.ToDateTime(Request.QueryString["end"]));
+            test.ChangeDataCenter(Request.QueryString["datacen"]);
+            test.ChangeNetworkID(Convert.ToInt32(Request.QueryString["network"]));
             return JsonConvert.SerializeObject(test.CalculateOverviewBar(Request.QueryString["pipeline"]));
         }
 
@@ -50,24 +57,11 @@ namespace MvcApplication1.Controllers
 
 			test.ChangeDataCenter(Request.QueryString["datacen"]);
 
+            test.ChangePipeline(Request.QueryString["pipeline"]);
+
 			DataTable table = test.CalculateDataCenterHeatMap();
 
             return JsonConvert.SerializeObject(table, Formatting.Indented);
-        }
-
-        public string getTeams()
-        {
-            return "";
-        }
-
-        public string getReliability()
-        {
-            return "";
-        }
-
-        public string getPerformance()
-        {
-            return "";
         }
     }
 }

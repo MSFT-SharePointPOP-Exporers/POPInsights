@@ -25,8 +25,8 @@
               });
 
               var overviewheader = $.ajax({
-                  data: "pipeline=Overview&start=" + sessionStorage["start"] + "&end=" + sessionStorage["end"],
-                  url: '<%= Url.Action("getOverview", "ViRT_Query") %>',
+                  data: sessionStorage["query"],
+                  url: '<%= Url.Action("getOverviewHeader", "ViRT_Query") %>',
                   dataType: "json",                      
               });
 
@@ -102,7 +102,7 @@
     <nav class="top-bar" data-topbar>
         <ul class="title-area">
             <li class="name">
-               <h1><a href="../Home" onclick="setHomeDefaults()">//popinsights</a></h1>
+               <h1>//popinsights</h1>
             </li>
         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
