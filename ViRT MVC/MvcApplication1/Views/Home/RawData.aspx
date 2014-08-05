@@ -24,15 +24,9 @@
     <script type="text/javascript" src="http://www.amcharts.com/lib/3/serial.js"></script>
     <script type="text/javascript" src="http://www.amcharts.com/lib/3/themes/dark.js"></script>
     <script>
-    	$(document).ready(function() {
-    		$(document).ajaxSend(function () {
-    			$("#loading").fadeIn();
-    		});
+        $(document).ready(function() {
 
-    		$(document).ajaxComplete(function () {
-    			$("#loading").fadeOut("slow");
-    		});
-
+            //Auto-fills the list of available datacenters then sets the field to the data in the querystring.
     		$.ajax({
     			data: sessionStorage["query"],
     			url: '<%= Url.Action("getDatacenters", "ViRT_Query") %>',
@@ -46,6 +40,7 @@
                 }
             });
 
+            //Auto-fills the list of available networks then sets the field to the data in the querystring.
         	$.ajax({
         		data: sessionStorage["query"],
         		url: '<%= Url.Action("getNetworks", "ViRT_Query") %>',
@@ -59,6 +54,7 @@
                 }
             });
 
+            //Auto-fills the list of available farms then sets the field to the data in the querystring.
         	$.ajax({
         		data: sessionStorage["query"],
         		url: '<%= Url.Action("getFarms", "ViRT_Query") %>',
@@ -77,12 +73,12 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="TitleContent" runat="server">
-    RawData
+    //popinsights - Raw Data Graphs
 </asp:Content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="FeaturedContent" runat="server">
     <div class="graph_header">
-        <h1>Raw Data</h1>
+        <h1>Raw Hit Counts</h1>
         <a href="PercentData" id="PercentDataLink">View Component Reliability</a>
     </div>
 
@@ -115,15 +111,6 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
     <div id="chartdiv" style="width: 100%; height: 70%;"></div>
     <script>
-    	$(document).ready(function() {
-    		$(document).ajaxSend(function () {
-    			$("#loading").fadeIn();
-    		});
-
-    		$(document).ajaxComplete(function () {
-    			$("#loading").fadeOut("slow");
-    		});
-    	});
     	var bullets = ["round", "square", "triangleUp", "triangleDown", "triangleLeft", "triangleRight", "diamond", "xError", "yError"];
     	var data = <%= Html.Raw(ViewBag.RawData)%>;//generateChartData();
         var titles = <%= Html.Raw(ViewBag.RawTitles)%>;
@@ -153,7 +140,7 @@
     			"valueAxes": [{
     				"id": "v1",
     				"position": "left",
-    				"axisColor": "#008CBA",
+    				"axisColor": "#43AC6A",
     				"axisThickness": 2,
     				"gridAlpha": 0,
     				"axisAlpha": 1
@@ -161,7 +148,7 @@
     			}, {
     				"id": "v2",
     				"position": "right",
-    				"axisColor": "#43AC6A",
+    				"axisColor": "#008CBA",
     				"axisThickness": 2,
     				"gridAlpha": 0,
     				"axisAlpha": 1
@@ -213,13 +200,13 @@
     						if( i ==0)
     						{
     							graph1.valueAxis = "v1";
-    							graph1.lineColor = "#008CBA";
+    							graph1.lineColor = "#43AC6A";
     						}
                         
     						if( i ==1)
     						{
     							graph1.valueAxis = "v2";
-    							graph1.lineColor = "#43AC6A";
+    							graph1.lineColor = "#008CBA";
     						}
                         
 

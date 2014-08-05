@@ -113,7 +113,9 @@
       <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
-          <li class="has-dropdown show-for-medium-down">
+            <li class="show-for-small-only"><a href="../Home" onclick="setHomeDefaults()">Home</a></li>
+            <li class="show-for-small-only"><a href="../RePD">MSR Report</a></li>
+            <li class="has-dropdown show-for-medium-down">
             <a href="#">Change Pipeline</a>
             <ul class="dropdown pipelines">
             </ul>
