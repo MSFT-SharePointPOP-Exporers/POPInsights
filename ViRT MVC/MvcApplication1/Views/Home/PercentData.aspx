@@ -74,7 +74,6 @@
         			"useGraphSettings": true,
         			"color": "#e1e1e1",
         			"position": "bottom",
-        			"width": 500,
         			"valueText": ""
         		},
         		"chartScrollbar": {
@@ -123,7 +122,7 @@
 <asp:Content ID="Content" ContentPlaceHolderID="FeaturedContent" runat="server">
     <div class="graph_header">
         <h1>Component Reliability</h1>
-        <a href="RawData" id="RawDataLink">View Raw Data</a>
+        <a href="RawData" id="RawDataLink">View Raw Hit Counts</a>
     </div> 
     <div id="selectors" class="small-12 medium-12 large-12">
         <form id="form1" runat="server">
@@ -157,6 +156,10 @@
             text-decoration: underline;
         }
 
+        #rendering {
+            height:100%;
+        }
+
         #chartdiv {
             width: 100%;
             height: 80%;
@@ -174,6 +177,15 @@
 
         #RawDataLink {
             padding: 0;
+        }
+
+        @media only screen and (max-width: 40em) {
+
+            #rendering {
+                height:100%;
+                overflow:visible;
+            }
+
         }
     </style>
     <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>

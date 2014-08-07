@@ -1,8 +1,26 @@
-﻿#chartdiv {
+﻿.amChartLegend {
+    width:40%;
+}
+
+#chartdiv {
     overflow-y:scroll;
-    overflow-x:hidden;
+    width:100%;
+    position:relative;
+    bottom:0;
 }
 
 #rendering {
     overflow:hidden;                  
+}
+
+@media only screen and (max-width: 40em) {
+
+    #rendering {
+        height:100%;
+        overflow:visible;
+    }
+
+    #chartdiv {
+        overflow:visible !important;
+    }
 }

@@ -90,18 +90,20 @@ function setPipeline(id) {
 function setDatacenter(id) {
     sessionStorage["datacen"] = id;
     sessionStorage["changed"] = true;
-    updateQueryString();
-	window.location.href = "../Home/DCHM";
 }
 
 /*
-    CHANGE DESCRIPTIONS UJEFJ@#QR@#    
+    Dynamically changes the navigation at the top of the screen by checking what the datacenter 
+    sessionstorage variable is set to. If it's datacenter is "All", then the page will set
+    the Home link as the current link, since the only screen where datacenter is "All" is the home screen.
+    Otherwise, it just adds the link to Home (which when clicked will reset the datacenter, network, and farm) 
+    and the link to the MSR Report.
 */
 function setBreadcrumbs() {
     if (sessionStorage["datacen"] != "All") {
         $(".breadcrumbs").append("<li onclick='setHomeDefaults();'><a href = '../Home/'>Home</a></li>");
         $(".breadcrumbs").append("<li><a href = '../RePD/'>MSR Report</a></li>");
-    } else  if (sessionStorage["datacen"] == "All") {
+    } else {
         $(".breadcrumbs").append("<li class='current'>Home</li>");
         $(".breadcrumbs").append("<li><a href = '../RePD/'>MSR Report</a></li>");
     }
@@ -128,7 +130,7 @@ function setNetwork(id) {
 	sessionStorage["network"] = id;
 	sessionStorage["farm"] = -1;
 	sessionStorage["changed"] = true;
-	window.location.href = "PercentData";
+	window.location.href = "../Home/PercentData";
 }
 
 /*
@@ -137,7 +139,6 @@ function setNetwork(id) {
     sessionStorage variables, the input fields, and the breadcrumbs.
 */
 $(document).ready(function () {
-    //$("#loading").fadeIn();
     $(document).foundation();
     if (sessionStorage["changed"] == false || sessionStorage["query"] == undefined) {
         setDefaults();
@@ -147,7 +148,6 @@ $(document).ready(function () {
         setSessionStorage();
 		setFields();
 		setBreadcrumbs();
-	//$("#loading").fadeOut("slow");
 });
 
 //Move Elsewhere!
@@ -176,6 +176,4 @@ $(document).ready(function () {
 			$('.to').val(selectedDate);
 		}
 	});
-
-	//$("#loading").fadeOut("slow");
 });

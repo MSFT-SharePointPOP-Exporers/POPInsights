@@ -297,15 +297,29 @@
             overflow-y:scroll;
         }
 
+        #rendering {
+            height:50%;
+            padding-top:30px;
+        }
+
+        #mapdiv {
+            height:100%;
+        }
+
         #legendBar {
-            padding: 0 12.5%;
-        }           
+            padding: 0 3%;
+            position:fixed;
+        } 
+        
+        .legend {
+            font-size:0.63rem;
+        }         
         
         /* Overview Bar Mobile View */
 
         #overviewbar{
             padding: 12% 12% 0px 12%;
-            height:initial;
+            height:auto;
         }
 
         #overviewbar h1{
