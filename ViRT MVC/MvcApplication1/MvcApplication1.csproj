@@ -193,6 +193,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MSRperformanceModel.cs" />
+    <Compile Include="Models\MSRqualityModel.cs" />
     <Compile Include="Models\MSRreliabilityModel.cs" />
     <Compile Include="Models\ReliabilityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

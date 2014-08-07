@@ -191,7 +191,7 @@ namespace MvcApplication1.Models
 			//Iterate throught the entire time period
 			for (DateTime i = start; i < end; i = i.AddHours(1))
 			{
-				toAdd["Date"] = i;
+				
 				//Iterate through all the datePercent components tables
 				for (int j = 0; j < datePercents.Length; j++)
 				{
@@ -206,8 +206,25 @@ namespace MvcApplication1.Models
 					}
 				}
 				//Add the entries to the return table
-				dt.Rows.Add(toAdd);
-				toAdd = dt.NewRow();
+
+				bool isEmpty = true;
+
+				for (int s = 0; s < toAdd.Table.Columns.Count; s++)
+				{
+					if (!toAdd.IsNull(s))
+					{
+						isEmpty = false;
+					}
+				}
+
+				if (!isEmpty)
+				{
+					toAdd["Date"] = i;
+					dt.Rows.Add(toAdd);
+					toAdd = dt.NewRow();
+				}
+
+
 			}
 
 			//Close db and return table
