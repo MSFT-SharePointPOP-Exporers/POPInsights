@@ -82,7 +82,7 @@
         <li class="team" id="Profile"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Profile</a></li>
     </ul>
     </div>
-    <div id="rendering" class="small-12 medium-11 large-9 columns">
+    <div id="rendering" class="small-12 medium-11 large-11 columns">
         <h1></h1>
       <div id="dates" class="dates large-2 medium-2 columns show-for-medium-up">
             <label for="month">Select Month:</label>

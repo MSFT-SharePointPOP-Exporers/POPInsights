@@ -139,7 +139,6 @@ function setNetwork(id) {
     sessionStorage variables, the input fields, and the breadcrumbs.
 */
 $(document).ready(function () {
-    //$("#loading").fadeIn();
     $(document).foundation();
     if (sessionStorage["changed"] == false || sessionStorage["query"] == undefined) {
         setDefaults();
@@ -149,7 +148,6 @@ $(document).ready(function () {
         setSessionStorage();
 		setFields();
 		setBreadcrumbs();
-	//$("#loading").fadeOut("slow");
 });
 
 //Move Elsewhere!

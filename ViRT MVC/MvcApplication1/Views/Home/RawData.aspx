@@ -68,6 +68,33 @@
                 }
         	});
 
+
+            /* 
+                If the value of the datacenter dropdown is changed, then this will update
+                the sessionStorage value for the datacenter, then update the querystring.
+            */
+            $("#FeaturedContent_Datacenter").change(function () {
+                sessionStorage["datacen"] = $("#FeaturedContent_Datacenter").val().toString();
+                updateQueryString();
+            });
+
+            /* 
+                If the value of the network dropdown is changed, then this will update
+                the sessionStorage value for the network, then update the querystring.
+            */
+            $("#FeaturedContent_Network").change(function () {
+                sessionStorage["network"] = $("#FeaturedContent_Network").val();
+                updateQueryString();
+            });
+
+            /* 
+                If the value of the farm dropdown is changed, then this will update
+                the sessionStorage value for the farm, then update the querystring.
+            */
+            $("#FeaturedContent_Farm").change(function () {
+                sessionStorage["farm"] = $("#FeaturedContent_Farm").val();
+                updateQueryString();
+            });
         });
     </script>
 </asp:Content>

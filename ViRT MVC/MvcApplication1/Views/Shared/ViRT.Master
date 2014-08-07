@@ -15,8 +15,6 @@
     <%: Scripts.Render("~/bundles/modernizr") %>
       <script type="text/javascript">
           $(document).ready(function () {
-              var arr = [];
-
               var pipelines = $.ajax({
                   contentType: "application/json",
                   data: "",
@@ -80,19 +78,6 @@
                       alert("The format of the dates in the date filters is not correct. (Format: YYYY-MM-DD)");
 
                   }
-              });
-
-              $("#FeaturedContent_Datacenter").change(function () {
-                  sessionStorage["datacen"] = $("#FeaturedContent_Datacenter").val().toString();
-                  updateQueryString();
-              });
-              $("#FeaturedContent_Network").change(function () {
-                  sessionStorage["network"] = $("#FeaturedContent_Network").val();
-                  updateQueryString();
-              });
-              $("#FeaturedContent_Farm").change(function () {
-                  sessionStorage["farm"] = $("#FeaturedContent_Farm").val();
-                  updateQueryString();
               });
           });
       </script>
