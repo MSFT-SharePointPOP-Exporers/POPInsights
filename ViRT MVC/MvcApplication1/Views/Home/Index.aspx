@@ -14,7 +14,7 @@
 </asp:Content>
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="mapdiv" style="width: 100%; height: 94%;">
+    <div id="mapdiv">
 		<script>
 			/*
 				although ammap has methos like getAreaCenterLatitude and getAreaCenterLongitude,
@@ -80,7 +80,7 @@
 					var id = dataItem.code;
 					var des = "Reliability of Data Center: "
 					des = des.concat(val.toFixed(2) + "%");
-					des = des.concat("</br></br><a href='#' id='" + dataItem.code.substring(0,3) + "' onclick='setDatacenter(this.id)'>Detailed Data Center View</a>");
+					des = des.concat("</br></br><a href='../Home/DCHM' id='" + dataItem.code.substring(0,3) + "' onclick='setDatacenter(this.id)'>Detailed Data Center View</a>");
 
 					dataProvider.images.push({
 						label: id,                 

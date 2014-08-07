@@ -36,28 +36,33 @@
         $(document).ready(function () {
             $("#rendering h1").append(sessionStorage["team"]);
 
-                var ajaxreliability = $.ajax({
-                    data: "month=" + sessionStorage["month"],
-                    url: '<%= Url.Action("getReliability", "RePD_Query") %>'                        
-                });
+            //GET request for reliability percentage
+            var ajaxreliability = $.ajax({
+                data: "month=" + sessionStorage["month"],
+                url: '<%= Url.Action("getReliability", "RePD_Query") %>'                        
+            });
 
+            //GET request for performance percentage
             var ajaxperformance = $.ajax({
                 data: "month=" + sessionStorage["month"],
                     url: '<%= Url.Action("getPerformance", "RePD_Query") %>'                        
-                });
+            });
 
-            //Still needs to be done!
-                var ajaxqos = $.ajax({
+            //GET request for quality of service percentage
+            var ajaxqos = $.ajax({
                     data: "month=" + sessionStorage["month"],
                     url: '<%= Url.Action("getQoS", "RePD_Query") %>'
             });
-
+           
+            //GET request for latency in milleseconds
             var ajaxlatency = $.ajax({
                 data: "month=" + sessionStorage["month"],
                 url: '<%= Url.Action("getLatency", "RePD_Query") %>'
             });
 
-            ajaxreliability.done(function(data) {
+
+            //AJAX posts are performed in order to make sure that the load screen disappears when page finishes loading
+            ajaxreliability.done(function(data) {  //Reliability percentage
                 reliability_val = parseFloat(data);
                 if (reliability_val != 0) {
                     $(".reliability").append(reliability_val.toFixed(2) + "%");
@@ -71,7 +76,7 @@
                 } else {
                     $(".reliability").append("N/A");
                 }
-                ajaxperformance.done(function(data) {
+                ajaxperformance.done(function(data) { //Performance percentage
                     performance_val = parseFloat(data);
                     if (performance_val != 0) {
                         $(".performance").append(performance_val.toFixed(2) + "%");
@@ -85,7 +90,7 @@
                     } else {
                         $(".performance").append("N/A");
                     }
-                    ajaxqos.done(function(data) {
+                    ajaxqos.done(function(data) { //Quality of Service percentage
                         $(".qos").append(QoS_val.toFixed(2) + "%");
                         if (QoS_val > upper) {
                             $(".qos").addClass("green");
@@ -94,11 +99,11 @@
                         } else if (QoS_val < lower) {
                             $(".qos").addClass("red");
                         }
-                        ajaxlatency.done(function(data) {
+                        ajaxlatency.done(function(data) { //Latency in milleseconds
                             latency = parseInt(data);
                             if (latency != 0) {
                                 $(".latency").append(latency + " ms");
-                                if (latency > 200) {
+                                if (latency < 400) {
                                     $(".latency").addClass("green");
                                 } else {
                                     $(".latency").addClass("red");
@@ -138,7 +143,7 @@
      95th percentile server latency*<br />
      *Goal is < 200 ms
     </td>
-    <td class="text latency"></td>
+    <td class="text latency"></td><!--Latency-->
   </tr>
 </table>
         </div>

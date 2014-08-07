@@ -57,6 +57,14 @@
         <ul class="right">
           <li class="has-dropdown show-for-medium-down">
           </li>
+            <a href="#">Change Teams</a>
+            <ul class="dropdown show-for-small-only">
+                <li class="team"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Tenant Platform</a></li>
+        <li class="team" onclick="setTeam(this.id)"><a href="">Authentication</a></li>
+        <li class="team"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">OneDrive</a></li>
+        <li class="team"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Profile</a></li>
+            </ul>
+            <li class="show-for-small-only"><a href="../Home">Back to ViRT</a></li>
           <li class="has-form  show-for-small-only">
             <div id="small_dates" class="dates show-for-medium-down medium-12 small-12">
                 <label for="month">Select Month:</label>
@@ -68,10 +76,10 @@
     </nav>
     <div id="teams" class="show-for-large-up large-1 columns">
     <ul class="side-nav teams">
-        <li class="team" id="TenantPlatform" onclick="setTeam(this.id)"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Tenant Platform</a></li>
-        <li class="team" id="Authentication" onclick="setTeam(this.id)"><a href="#">Authentication</a></li>
-        <li class="team" id="OneDrive" onclick="setTeam(this.id)"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">OneDrive</a></li>
-        <li class="team" id="Profile" onclick="setTeam(this.id)"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Profile</a></li>
+        <li class="team" id="TenantPlatform"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Tenant Platform</a></li>
+        <li class="team" id="Authentication" onclick="setTeam(this.id)"><a href="">Authentication</a></li>
+        <li class="team" id="OneDrive"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">OneDrive</a></li>
+        <li class="team" id="Profile"><a href="http://tpp/Portal.aspx?DB7008DB84C7746C" target="_blank">Profile</a></li>
     </ul>
     </div>
     <div id="rendering" class="small-12 medium-11 large-11 columns">

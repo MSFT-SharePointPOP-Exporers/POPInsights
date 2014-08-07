@@ -15,8 +15,6 @@
     <%: Scripts.Render("~/bundles/modernizr") %>
       <script type="text/javascript">
           $(document).ready(function () {
-              var arr = [];
-
               var pipelines = $.ajax({
                   contentType: "application/json",
                   data: "",
@@ -81,19 +79,6 @@
 
                   }
               });
-
-              $("#FeaturedContent_Datacenter").change(function () {
-                  sessionStorage["datacen"] = $("#FeaturedContent_Datacenter").val().toString();
-                  updateQueryString();
-              });
-              $("#FeaturedContent_Network").change(function () {
-                  sessionStorage["network"] = $("#FeaturedContent_Network").val();
-                  updateQueryString();
-              });
-              $("#FeaturedContent_Farm").change(function () {
-                  sessionStorage["farm"] = $("#FeaturedContent_Farm").val();
-                  updateQueryString();
-              });
           });
       </script>
     <asp:ContentPlaceHolder ID="Head" runat="server" />
@@ -113,7 +98,9 @@
       <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
-          <li class="has-dropdown show-for-medium-down">
+            <li class="show-for-small-only"><a href="../Home" onclick="setHomeDefaults()">Home</a></li>
+            <li class="show-for-small-only"><a href="../RePD">MSR Report</a></li>
+            <li class="has-dropdown show-for-medium-down">
             <a href="#">Change Pipeline</a>
             <ul class="dropdown pipelines">
             </ul>
